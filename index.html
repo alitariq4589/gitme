@@ -8,6 +8,32 @@
     content="GitMe — AI-Powered Open Source Proof-of-Work. Verify and showcase your GitHub contributions." />
   <title>GitMe | Open Source Proof-of-Work</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <script type="text/javascript">
+    // Single Page Apps for GitHub Pages
+    // https://github.com/rafgraph/spa-github-pages
+    // Copyright (c) 2016 Rafael Pedicini, licensed under the MIT License
+    // ----------------------------------------------------------------------
+    // This script checks to see if a redirect is present in the query string,
+    // converts it back into the correct url and adds it to the
+    // browser's history using window.history.replaceState(...),
+    // which will cause the browser to refresh the page without losing
+    // the history objects.
+    // ----------------------------------------------------------------------
+    (function (l) {
+      if (l.search[1] === '/') {
+        var decoded = l.search.slice(1).split('&').map(function (s) {
+          return s.replace(/~and~/g, '&')
+        }).filter(function (v) {
+          return v.indexOf('p=/') === 0
+        })[0];
+        if (decoded !== undefined) {
+          window.history.replaceState(null, null,
+            l.pathname.slice(0, -1) + decoded.slice(3) + l.hash
+          );
+        }
+      }
+    }(window.location))
+  </script>
 </head>
 
 <body>

@@ -8,6 +8,15 @@ const GitMeChat = ({ data }) => {
     const [isLoading, setIsLoading] = useState(false);
     const messagesEndRef = useRef(null);
 
+    const [showTeaser, setShowTeaser] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if (!isOpen) setShowTeaser(true);
+        }, 2000);
+        return () => clearTimeout(timer);
+    }, [isOpen]);
+
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     };
@@ -15,6 +24,7 @@ const GitMeChat = ({ data }) => {
     useEffect(() => {
         if (isOpen) {
             scrollToBottom();
+            setShowTeaser(false);
         }
     }, [messages, isOpen]);
 
@@ -109,9 +119,33 @@ const GitMeChat = ({ data }) => {
 
     return (
         <div className="fixed bottom-6 right-6 z-[100] font-sans">
+            {/* Teaser Popup */}
+            {!isOpen && showTeaser && (
+                <div className="absolute bottom-16 right-0 mb-2 mr-0 whitespace-nowrap animate-in fade-in slide-in-from-bottom-2 duration-500">
+                    <div className="relative bg-brand-action text-white text-xs font-bold py-2.5 px-4 rounded-xl shadow-2xl border border-white/20 flex items-center gap-2">
+                        <Sparkles size={14} className="animate-pulse" />
+                        <span>Ask me anything about {data.name.split(' ')[0] || 'this developer'}!</span>
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setShowTeaser(false);
+                            }}
+                            className="ml-1 hover:bg-white/20 rounded-full p-0.5 transition-colors"
+                        >
+                            <X size={12} />
+                        </button>
+                        {/* Little spike pointing at the button */}
+                        <div className="absolute -bottom-1.5 right-6 w-3 h-3 bg-brand-action rotate-45 border-r border-b border-white/20"></div>
+                    </div>
+                </div>
+            )}
+
             {/* Toggle Button */}
             <button
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={() => {
+                    setIsOpen(!isOpen);
+                    setShowTeaser(false);
+                }}
                 className={`w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all transform hover:scale-110 active:scale-95 border-2 border-white/10 ${isOpen ? 'bg-github-status-closed text-white hover:rotate-90' : 'bg-brand-action text-white'
                     }`}
             >
@@ -140,7 +174,7 @@ const GitMeChat = ({ data }) => {
                         {messages.length === 0 && (
                             <div className="text-center py-6">
                                 <p className="text-xs text-github-text-secondary leading-relaxed px-4">
-                                    Hello! I've analyzed {data.name}'s profile. Ask me anything about their technical background or impact.
+                                    Hello! I've analyzed {data.name || 'this developer'}'s profile. Ask me anything about their technical background or impact.
                                 </p>
                             </div>
                         )}
@@ -180,7 +214,7 @@ const GitMeChat = ({ data }) => {
                                 type="text"
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
-                                placeholder="Ask about this developer..."
+                                placeholder={`Ask me anything about ${data.name || 'this developer'}...`}
                                 className="w-full bg-github-bg-tertiary border border-github-border rounded-xl px-4 py-2 text-sm text-github-text focus:outline-none focus:border-brand-action transition-colors pr-12"
                             />
                             <button

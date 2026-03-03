@@ -15,10 +15,10 @@ const Navbar = ({ data, onLogout }) => {
         <nav className="border-b border-github-border bg-github-bg-secondary sticky top-0 z-50">
             <div className="max-w-[1280px] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
                 <div className="flex items-center gap-6">
-                    <div className="flex items-center gap-2">
+                    <NavLink to="/home" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
                         <GithubLogo size={32} className="text-github-text" />
                         <span className="font-bold text-base tracking-tight text-github-text hidden sm:inline">GitMe</span>
-                    </div>
+                    </NavLink>
 
                     {data && (
                         <div className="flex items-center gap-1">
@@ -36,13 +36,16 @@ const Navbar = ({ data, onLogout }) => {
                             <NavLink
                                 to="/profile"
                                 className={({ isActive }) =>
-                                    `px-3 py-[18px] text-sm font-medium border-b-2 transition-colors ${isActive
+                                    `px-3 py-[18px] text-sm font-medium border-b-2 transition-colors flex items-center gap-1.5 ${isActive
                                         ? 'text-github-text border-github-status-closed'
                                         : 'text-github-text-secondary border-transparent hover:text-github-text hover:border-github-border'
                                     }`
                                 }
                             >
                                 Contributions
+                                <span className="px-1.5 py-0.5 text-[10px] font-bold bg-github-accent-success/20 text-github-accent-success border border-github-accent-success/30 rounded-full leading-none">
+                                    New
+                                </span>
                             </NavLink>
                         </div>
                     )}
