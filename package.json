@@ -2,6 +2,17 @@
   "name": "gitme",
   "private": true,
   "version": "1.0.0",
+  "description": "AI-powered GitHub profile analyzer and developer impact dashboard. Visualize contributions, synthesize professional summaries, and build a technical resume.",
+  "keywords": [
+    "github",
+    "profile-analyzer",
+    "impact-dashboard",
+    "developer-portfolio",
+    "resume-builder",
+    "ai",
+    "react",
+    "vite"
+  ],
   "type": "module",
   "scripts": {
     "dev": "vite",

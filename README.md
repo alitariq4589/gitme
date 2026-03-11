@@ -1,37 +1,53 @@
-# <p align="center">GitMe</p>
+# <p align="center">GitMe: AI-Powered GitHub Profile Analyzer & Developer Impact Dashboard</p>
 
 <p align="center">
-  <img src="public/gitme_banner.png" alt="GitMe Banner" width="800">
+  <img src="public/gitme_banner.png" alt="GitMe Banner - GitHub Profile Analytics & Resume Builder" width="800">
 </p>
 
 <p align="center">
-  <strong>Deep Dive into Developer Impact.</strong>
+  <strong>Synthesize Raw Code into Professional Narratives. Visualize Real Growth.</strong>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite">
-  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React">
-  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind">
-  <img src="https://img.shields.io/badge/GitHub_API-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
+  <a href="https://github.com/akifejaz/gitme/stargazers"><img src="https://img.shields.io/github/stars/akifejaz/gitme?style=for-the-badge&color=yellow" alt="stars"></a>
+  <a href="https://github.com/akifejaz/gitme/network/members"><img src="https://img.shields.io/github/forks/akifejaz/gitme?style=for-the-badge&color=blue" alt="forks"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge" alt="license"></a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite">
+  <img src="https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB" alt="React">
+  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white" alt="Tailwind">
+  <img src="https://img.shields.io/badge/GitHub_GraphQL-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub API">
+  <img src="https://img.shields.io/badge/AI_Powered-OpenRouter-orange?style=flat-square" alt="AI Powered">
 </p>
 
 ---
 
-## The Philosophy
+## Why GitMe?
 
-Standard GitHub profiles often fail to capture the true scale and quality of a developer's work. Contributions are frequently buried under simple "green squares" that don't differentiate between a massive architectural refactor and a typo fix.
+In the modern hiring landscape, a **GitHub Profile** is more than a portfolio; it's a living resume. However, standard profiles often obscure the **depth and quality** of work under simple contribution squares.
 
-GitMe was built to provide a more detailed, fair, and comprehensive view of your open-source journey. It extracts the narrative from your raw data—highlighting the organizations you influence, the languages you master, and the specific impact of your Pull Requests and Discussions.
+**GitMe** bridges the gap between raw data and developer identity. It doesn't just list commits; it analyzes **impact**, identifies **core competencies**, and provides an **AI-driven synthesis** of your professional journey.
 
-## Core Capabilities
+---
 
-- **Detailed Work Synthesis**: Beyond just showing a profile, GitMe fetches your full profile metadata and personal README to present a complete professional identity in one view.
-- **Granular Contribution Discovery**: Deep-dive into your history with categorized views for Pull Requests, Issues, and Discussions. Filter through your work to show exactly where you contributed most.
-- **Multi-Year Activity Context**: Visualize your persistence over time with a multi-year contribution calendar, allowing you to track growth and consistency beyond a simple 12-month window.
-- **Technical Stack Visualization**: Automatically extract and showcase your primary technologies and the organizations you've collaborated with through dynamic visual sections.
-- **Contextual Work Analysis**: Uses contribution metadata to synthesize a professional summary that explains your technical expertise and the real-world impact of your code.
-- **On-Demand Technical Assistant**: A persistent interface that allows recruiters or collaborators to ask specific questions about your technical background based on your live GitHub data.
-- **Integrated CV Viewer**: A premium, high-end modal interface for viewing your professional CV/resume directly within the app, complete with download and external link support.
+## Performance-Driven Features
+
+### Deep Contribution Analytics
+Go beyond the 12-month window. Visualize **multi-year activity** across Pull Requests, Issues, and Discussions with granular filtering. See where your influence actually lies.
+
+### AI Technical Synthesis
+Leverages **OpenRouter (OpenAI/Anthropic)** to analyze your contribution metadata and generate a professional summary. It explains *what* you did and *why* it matters to potential collaborators.
+
+### Integrated Resume Engine
+A premium **CV/Resume viewer** built into the dashboard. Switch seamlessly from repo metrics to professional credentials with an integrated PDF viewer and downloader.
+
+### Discovery & Filtering
+Advanced discovery features for your own history. Filter contributions by organization, repository, or type to find that specific architectural refactor from three years ago.
+
+### Technical Stack Visualization
+Automatic extraction of your primary technologies and languages, presented through dynamic charts and visual sections that highlight your actual toolset.
 
 ---
 
@@ -39,59 +55,66 @@ GitMe was built to provide a more detailed, fair, and comprehensive view of your
 
 - **Framework**: [React](https://reactjs.org/) + [Vite](https://vitejs.dev/)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/) + [Lucide Icons](https://lucide.dev/)
-- **Data Layer**: GitHub GraphQL API (v4)
-- **Intelligence**: OpenRouter API
-- **Content Engine**: `react-markdown` with GFM support
+- **Data Engine**: [GitHub GraphQL API (v4)](https://docs.github.com/en/graphql)
+- **Intelligence**: [OpenRouter API](https://openrouter.ai/)
+- **Markdown Handling**: `react-markdown` with GFM
 
 ---
 
-## Getting Started
+## Quick Start
 
 ### 1. Prerequisites
-You will need:
-- A GitHub Personal Access Token (classic) with `repo`, `read:user`, and `user:email` scopes.
-- An OpenRouter API Key (to enable technical synthesis features).
+- **GitHub Personal Access Token** (classic): Requires `repo`, `read:user`, and `user:email`.
+- **OpenRouter API Key**: To enable the AI Technical Assistant.
 
-### 2. Setup
-1. Clone the repository and navigate to the `gitme` directory.
-2. Create a `.env` file:
-   ```env
-   VITE_OPENROUTER_API_KEY=your_key_here
-   ```
-3. Install and run:
-   ```bash
-   npm install
-   npm run dev
-   ```
+### 2. Installation
+```bash
+# Clone the repository
+git clone https://github.com/akifejaz/gitme
 
-### 3. Usage
-- Open `http://localhost:3000`
-- Log in with your GitHub Username and Token.
-- Use the **Overview** to see your high-level impact.
-- Use the **Contributions** tab to browse your detailed work history with advanced filters.
-- View your professional CV at any time via the **See my CV** button in the header.
+# Navigate to directory
+cd gitme
 
-### 4. Customization
-You can easily personalize the profile by editing the `userConfig.js` file in the root directory:
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+```
+
+### 3. Configuration
+Personalize your dashboard in `userConfig.js`:
 ```javascript
 const userConfig = {
   name: "Your Name",
   email: "your.email@example.com",
-  linkedin: "https://linkedin.com/in/yourprofile",
   github: "https://github.com/yourusername",
-  meetingLink: "https://calendar.app.google/yourlink",
-  cvUsername: "your_cv_filename" // Matches public/cv/your_cv_filename.pdf
+  cvUsername: "technical_resume" // public/cv/technical_resume.pdf
 };
 ```
-This file controls your social links, contact info, and the CV filename dynamically across the site.
 
 ---
 
-## Security
-GitMe is strictly a client-side application. Your GitHub Access Token is used only to query the GitHub GraphQL API directly from your browser. No data is stored or transmitted to external servers except for the official GitHub and OpenRouter APIs.
+## Privacy & Security
+
+**Client-Side Only**: GitMe operates entirely in your browser. Your API tokens are never sent to our servers; they are used only for direct calls to GitHub and OpenRouter. Your data stays yours.
+
+---
+
+## 🤝 Contributing
+
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ---
 
 <p align="center">
-  Bridging the gap between raw code and developer impact.
+  Built with ❤️ for the Open Source Community. <br/>
+  <b>Give a ⭐ if you find this project useful!</b>
 </p>
+
