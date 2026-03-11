@@ -1,11 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import LoginPage from './pages/LoginPage';
-import HomePage from './pages/HomePage';
-import ProfilePage from './pages/ProfilePage';
 import GitMeChat from './components/GitMeChat';
 import Footer from './components/Footer';
+
+const LoginPage = lazy(() => import('./pages/LoginPage'));
+const HomePage = lazy(() => import('./pages/HomePage'));
+const ProfilePage = lazy(() => import('./pages/ProfilePage'));
+
+const PageLoader = () => (
+  <div className="min-h-screen bg-github-bg flex items-center justify-center">
+    <div className="w-6 h-6 border-2 border-github-text-secondary/30 border-t-github-text-secondary rounded-full animate-spin" />
+  </div>
+);
+
 const App = () => {
   const [token, setToken] = useState('');
   const [username, setUsername] = useState('');
@@ -32,16 +40,14 @@ const App = () => {
 
 
 
-  // --- Fetch contribution calendar for a given year ---
+  // --- Fetch contribution calendar for a given year (PARALLEL) ---
   const fetchContributionCalendar = async (ghToken, loginName, years) => {
     const calendars = {};
 
-    // Add a "Last Year" entry for the rolling 365 days view
     const today = new Date();
     const lastYear = new Date();
     lastYear.setFullYear(today.getFullYear() - 1);
 
-    // Convert to ISO strings for GraphQL
     const periods = [
       { id: 'Last Year', from: lastYear.toISOString(), to: today.toISOString() },
       ...years.map(y => ({
@@ -51,7 +57,7 @@ const App = () => {
       }))
     ];
 
-    for (const period of periods) {
+    const fetchPeriod = async (period) => {
       const query = `
         query($login: String!, $from: DateTime!, $to: DateTime!) {
           user(login: $login) {
@@ -79,12 +85,19 @@ const App = () => {
         });
         const result = await response.json();
         if (result.data?.user?.contributionsCollection?.contributionCalendar) {
-          calendars[period.id] = result.data.user.contributionsCollection.contributionCalendar;
+          return { id: period.id, calendar: result.data.user.contributionsCollection.contributionCalendar };
         }
       } catch (err) {
         console.error(`Error fetching calendar for ${period.id}:`, err);
       }
-    }
+      return null;
+    };
+
+    const results = await Promise.all(periods.map(fetchPeriod));
+    results.forEach(r => {
+      if (r) calendars[r.id] = r.calendar;
+    });
+
     return calendars;
   };
 
@@ -186,39 +199,41 @@ const App = () => {
         )}
 
         <main className="flex-grow">
-          <Routes>
-            <Route
-              path="/"
-              element={
-                data ? (
-                  <Navigate to="/home" replace />
-                ) : (
-                  <LoginPage onLogin={handleLogin} autoLoggingIn={isAutoLoggingIn} />
-                )
-              }
-            />
-            <Route
-              path="/home"
-              element={
-                data ? (
-                  <HomePage
-                    data={data}
-                    username={username}
-                    token={token}
-                    contributionData={contributionData}
-                  />
-                ) : (
-                  <Navigate to="/" replace />
-                )
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                data ? <ProfilePage data={data} /> : <Navigate to="/" replace />
-              }
-            />
-          </Routes>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  data ? (
+                    <Navigate to="/home" replace />
+                  ) : (
+                    <LoginPage onLogin={handleLogin} autoLoggingIn={isAutoLoggingIn} />
+                  )
+                }
+              />
+              <Route
+                path="/home"
+                element={
+                  data ? (
+                    <HomePage
+                      data={data}
+                      username={username}
+                      token={token}
+                      contributionData={contributionData}
+                    />
+                  ) : (
+                    <Navigate to="/" replace />
+                  )
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  data ? <ProfilePage data={data} /> : <Navigate to="/" replace />
+                }
+              />
+            </Routes>
+          </Suspense>
         </main>
 
         {data && <Footer />}

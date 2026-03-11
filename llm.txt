@@ -16,11 +16,11 @@ GitMe provides a more detailed, fair, and comprehensive view of a developer's op
 - [userConfig.js](./userConfig.js): Centralized configuration for personal links and CV mapping.
 
 ## Source Code
-- [src/App.jsx](./src/App.jsx): Main application routing and core data fetching logic from GitHub GraphQL.
+- [src/App.jsx](./src/App.jsx): Main application routing with optimized parallel fetching for contribution calendars.
 - [src/pages/LoginPage.jsx](./src/pages/LoginPage.jsx): Login interface using GitHub Personal Access Tokens.
-- [src/pages/HomePage.jsx](./src/pages/HomePage.jsx): Main dashboard with profile summary, organizations, and languages.
+- [src/pages/HomePage.jsx](./src/pages/HomePage.jsx): Main dashboard with robust Markdown rendering, organizations marquee, and tech stack visualization.
 - [src/pages/ProfilePage.jsx](./src/pages/ProfilePage.jsx): Detailed activity logs for PRs, Issues, and Discussions.
-- [src/components/GitMeChat.jsx](./src/components/GitMeChat.jsx): AI Chatbot component integrated with OpenRouter.
+- [src/components/GitMeChat.jsx](./src/components/GitMeChat.jsx): AI Chatbot with safe name-parsing and OpenRouter integration.
 - [src/components/CVModal.jsx](./src/components/CVModal.jsx): High-end PDF viewer component.
 - [src/components/Navbar.jsx](./src/components/Navbar.jsx): Navigation header with authentication and CV access.
 - [src/components/Footer.jsx](./src/components/Footer.jsx): Professional site footer matching the header constraints.

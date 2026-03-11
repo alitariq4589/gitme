@@ -124,7 +124,7 @@ const GitMeChat = ({ data }) => {
                 <div className="absolute bottom-16 right-0 mb-2 mr-0 whitespace-nowrap animate-in fade-in slide-in-from-bottom-2 duration-500">
                     <div className="relative bg-brand-action text-white text-xs font-bold py-2.5 px-4 rounded-xl shadow-2xl border border-white/20 flex items-center gap-2">
                         <Sparkles size={14} className="animate-pulse" />
-                        <span>Ask me anything about {data.name.split(' ')[0] || 'this developer'}!</span>
+                        <span>Ask me anything about {data.name?.split(' ')[0] || 'this developer'}!</span>
                         <button
                             onClick={(e) => {
                                 e.stopPropagation();

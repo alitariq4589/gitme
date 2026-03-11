@@ -14,6 +14,16 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    sourcemap: true
-  }
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'markdown': ['react-markdown', 'remark-gfm', 'rehype-raw'],
+          'lucide': ['lucide-react'],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 500,
+  },
 })

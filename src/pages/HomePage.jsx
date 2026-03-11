@@ -1,21 +1,26 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import ReactMarkdown from 'react-markdown';
+import React, { useEffect, useState, useMemo, lazy, Suspense } from 'react';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
+import ReactMarkdown from 'react-markdown';
 import {
     Users,
-    MapPin,
     Building,
-    Star,
-    BookOpen,
     GitPullRequest,
     Calendar,
     Code2,
     FolderDot,
-    Sparkles
 } from 'lucide-react';
 import ContributionChart from '../components/ContributionChart';
 import userConfig from '../../userConfig';
+
+// Markdown utilities imported normally for stability
+
+const MarkdownLoader = () => (
+    <div className="flex items-center gap-3 text-sm text-github-text-secondary py-10 justify-center">
+        <div className="w-5 h-5 border-2 border-github-text-secondary/30 border-t-github-text-secondary rounded-full animate-spin" />
+        Loading markdown...
+    </div>
+);
 
 // --- Scrolling marquee wrapper ---
 const Marquee = ({ children, speed = 30 }) => {
@@ -180,16 +185,30 @@ const HomePage = ({ data, username, token, contributionData }) => {
                             </div>
                         )}
 
-                        {/* Social Logos */}
+                        {/* Social Logos - Inline SVG for performance */}
                         <div className="flex items-center gap-4 py-1">
+                            {/* GitHub - Official Silhouette */}
                             <a href={userConfig.github} target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
-                                <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" className="w-6 h-6 invert" />
+                                <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                                </svg>
                             </a>
+                            {/* LinkedIn - Official Blue Rounded Square */}
                             <a href={userConfig.linkedin} target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform">
-                                <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" className="w-6 h-6" />
+                                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
+                                    <rect width="24" height="24" rx="4" fill="#0A66C2" />
+                                    <path d="M8 19V9H5v10h3zM6.5 7.732c1.016 0 1.842-.827 1.842-1.842A1.842 1.842 0 1 0 4.658 5.89c0 1.015.826 1.842 1.842 1.842zM19 19v-5.399c0-2.895-1.545-4.242-3.605-4.242-1.662 0-2.396.914-2.822 1.555V9h-3.04c.04 1 0 10 0 10h3.04v-5.392c0-.288.02-.577.106-.785.232-.576.758-1.173 1.644-1.173 1.159 0 1.621.884 1.621 2.181V19H19z" fill="white" />
+                                </svg>
                             </a>
+                            {/* Gmail - Official Detailed Envelope */}
                             <a href={`mailto:${userConfig.email}`} className="hover:scale-110 transition-transform">
-                                <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email" className="w-6 h-6" />
+                                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
+                                    <path d="M22.5 3H1.5C.675 3 0 3.675 0 4.5v15c0 .825.675 1.5 1.5 1.5h21c.825 0 1.5-.675 1.5-1.5v-15c0-.825-.675-1.5-1.5-1.5z" fill="#EA4335" />
+                                    <path d="M24 4.5v15c0 .825-.675 1.5-1.5 1.5H21V7.125L12 12.75l-9-5.625V21H1.5c-.825 0-1.5-.675-1.5-1.5v-15C0 3.675.675 3 1.5 3H3l9 5.625L21 3h1.5C23.325 3 24 3.675 24 4.5z" fill="#EA4335" />
+                                    <path d="M21 7.125V21H3V7.125L12 12.75l9-5.625z" fill="#F2F2F2" />
+                                    <path d="M21 7.125L12 12.75V21h9V7.125z" fill="#E0E0E0" />
+                                    <path d="M21 3.375L12 9 3 3.375V4.5l9 5.625L21 4.5v-1.125z" fill="#C5221F" />
+                                </svg>
                             </a>
                         </div>
                     </div>
@@ -226,7 +245,7 @@ const HomePage = ({ data, username, token, contributionData }) => {
                                 ) : readme ? (
                                     <div className="prose prose-invert max-w-none">
                                         <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
-                                            {readme}
+                                            {String(readme || '')}
                                         </ReactMarkdown>
                                     </div>
                                 ) : (
@@ -263,7 +282,7 @@ const HomePage = ({ data, username, token, contributionData }) => {
                                                 rel="noopener noreferrer"
                                                 className="inline-flex items-center gap-2 px-4 py-2 bg-github-bg border border-github-border rounded-full text-sm text-github-text hover:border-github-text-link transition-all shrink-0"
                                             >
-                                                <img src={`https://github.com/${org}.png?size=32`} alt={org} className="w-6 h-6 rounded-sm" />
+                                                <img src={`https://github.com/${org}.png?size=32`} alt={org} className="w-6 h-6 rounded-sm" loading="lazy" decoding="async" />
                                                 <span className="font-medium">{org}</span>
                                             </a>
                                         ))}
