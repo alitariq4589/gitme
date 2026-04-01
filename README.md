@@ -67,6 +67,10 @@ Automatic extraction of your primary technologies and languages, presented throu
 - **GitHub Personal Access Token** (classic): Requires `repo`, `read:user`, and `user:email`.
 - **OpenRouter API Key**: To enable the AI Technical Assistant.
 
+For automated login, please ensure following secrets are created in your GitHub repository:
+- `VITE_GITHUB_TOKEN`: Your GitHub Personal Access Token.
+- `VITE_OPENROUTER_API_KEY`: Your OpenRouter API Key.
+
 ### 2. Installation
 ```bash
 # Clone the repository
