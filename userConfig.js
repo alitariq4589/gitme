@@ -9,12 +9,12 @@
  */
 
 const userConfig = {
-    name: "Akif Ejaz",
-    email: "akifejaz@gmail.com",
-    linkedin: "https://linkedin.com/in/akifejaz",
-    github: "https://github.com/akifejaz",
-    meetingLink: "https://calendar.app.google/sy4dWwRgVtXLHfBV6",
-    cvUsername: "akifejaz"
+    name: "Ali Tariq",
+    email: "alitariq4589@gmail.com",
+    linkedin: "https://www.linkedin.com/in/ali-tariq-23bb271b7/",
+    github: "https://github.com/alitariq4589",
+    meetingLink: "https://calendar.app.google/VrzhCAVRzPrNUeSw8",
+    cvUsername: "alitariq"
 };
 
 export default userConfig;
